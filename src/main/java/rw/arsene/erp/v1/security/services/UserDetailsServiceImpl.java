@@ -1,6 +1,6 @@
 package rw.arsene.erp.v1.security.services;
 
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -10,17 +10,17 @@ import rw.arsene.erp.v1.entity.Employee;
 import rw.arsene.erp.v1.repository.EmployeeRepository;
 
 @Service
-@RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
     
-    private final EmployeeRepository employeeRepository;
-    
+    @Autowired
+    EmployeeRepository employeeRepository;
+
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Employee employee = employeeRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("Employee not found with email: " + email));
-        
+                .orElseThrow(() -> new UsernameNotFoundException("Employee Not Found with email: " + email));
+
         return UserDetailsImpl.build(employee);
     }
 }

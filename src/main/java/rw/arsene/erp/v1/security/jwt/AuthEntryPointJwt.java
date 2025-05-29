@@ -9,10 +9,10 @@ import org.springframework.http.MediaType;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
-import rw.arsene.erp.v1.dto.ApiResponseDto;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 @Slf4j
@@ -26,14 +26,13 @@ public class AuthEntryPointJwt implements AuthenticationEntryPoint {
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             
-        ApiResponseDto<Object> responseBody = ApiResponseDto.<Object>builder()
-                .success(false)
-                .message("Unauthorized: " + authException.getMessage())
-                .data(null)
-                .timestamp(LocalDateTime.now())
-                .build();
+        final Map<String, Object> body = new HashMap<>();
+        body.put("status", HttpServletResponse.SC_UNAUTHORIZED);
+        body.put("error", "Unauthorized");
+        body.put("message", authException.getMessage());
+        body.put("path", request.getServletPath());
             
         final ObjectMapper mapper = new ObjectMapper();
-        mapper.writeValue(response.getOutputStream(), responseBody);
+        mapper.writeValue(response.getOutputStream(), body);
     }
 }
