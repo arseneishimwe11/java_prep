@@ -267,4 +267,14 @@ public class EmploymentDetailsServiceImpl implements EmploymentDetailsService {
     public long countByDepartment(String department) {
         return employmentDetailsRepository.countByDepartment(department);
     }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public EmploymentDetails getActiveEmploymentEntityByEmployeeId(Long employeeId) {
+        Employee employee = employeeRepository.findById(employeeId)
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not found with ID: " + employeeId));
+        
+        return employmentDetailsRepository.findByEmployeeAndStatus(employee, EmploymentStatus.ACTIVE)
+                .orElseThrow(() -> new ResourceNotFoundException("Active employment details not found for employee ID: " + employeeId));
+    }
 }

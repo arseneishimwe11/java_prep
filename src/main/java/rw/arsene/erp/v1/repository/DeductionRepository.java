@@ -1,7 +1,10 @@
 package rw.arsene.erp.v1.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import rw.arsene.erp.v1.entity.Deduction;
 
@@ -12,20 +15,20 @@ import java.util.Optional;
 public interface DeductionRepository extends JpaRepository<Deduction, Long> {
     
     Optional<Deduction> findByCode(String code);
-    Optional<Deduction> findByDeductionName(String deductionName);
     
     boolean existsByCode(String code);
+    
     boolean existsByDeductionName(String deductionName);
     
     List<Deduction> findByIsActiveTrue();
-    List<Deduction> findByIsActiveFalse();
     
-    @Query("SELECT d FROM Deduction d WHERE d.isActive = true ORDER BY d.deductionName")
-    List<Deduction> findAllActiveDeductionsOrdered();
+    Page<Deduction> findByIsActiveTrue(Pageable pageable);
     
-    @Query("SELECT d FROM Deduction d WHERE d.deductionName IN ('Employee Tax', 'Pension', 'Medical Insurance', 'Others') AND d.isActive = true")
-    List<Deduction> findStandardDeductions();
+    long countByIsActiveTrue();
     
-    @Query("SELECT d FROM Deduction d WHERE d.deductionName IN ('Housing', 'Transport') AND d.isActive = true")
-    List<Deduction> findAllowanceDeductions();
+    @Query("SELECT d FROM Deduction d WHERE " +
+           "LOWER(d.code) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
+           "LOWER(d.deductionName) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
+           "LOWER(d.description) LIKE LOWER(CONCAT('%', :keyword, '%'))")
+    Page<Deduction> searchDeductions(@Param("keyword") String keyword, Pageable pageable);
 }

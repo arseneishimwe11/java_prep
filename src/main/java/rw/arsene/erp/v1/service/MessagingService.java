@@ -1,6 +1,5 @@
 package rw.arsene.erp.v1.service;
 
-import rw.arsene.erp.v1.entity.Employee;
 import rw.arsene.erp.v1.entity.Payslip;
 
 public interface MessagingService {

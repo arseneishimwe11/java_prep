@@ -28,19 +28,15 @@ public class EmploymentDetailsMapper {
                 .id(employmentDetails.getId())
                 .code(employmentDetails.getCode())
                 .employeeId(employee.getId())
-                .employeeCode(employee.getCode())
-                .employeeName(employee.getFullName())
-                .employeeEmail(employee.getEmail())
                 .department(employmentDetails.getDepartment())
                 .position(employmentDetails.getPosition())
                 .baseSalary(employmentDetails.getBaseSalary())
                 .status(employmentDetails.getStatus())
                 .joiningDate(employmentDetails.getJoiningDate())
-                .endDate(employmentDetails.getEndDate())
+                .terminationDate(employmentDetails.getTerminationDate())
+                .notes(employmentDetails.getNotes())
                 .createdAt(employmentDetails.getCreatedAt())
                 .updatedAt(employmentDetails.getUpdatedAt())
-                .active(employmentDetails.isActive())
-                .currentEmployment(employmentDetails.isCurrentEmployment())
                 .build();
     }
     
@@ -61,7 +57,8 @@ public class EmploymentDetailsMapper {
                 .baseSalary(dto.getBaseSalary())
                 .status(dto.getStatus())
                 .joiningDate(dto.getJoiningDate())
-                .endDate(dto.getEndDate())
+                .terminationDate(dto.getTerminationDate())
+                .notes(dto.getNotes())
                 .build();
     }
     

@@ -91,7 +91,7 @@ public class PayslipServiceImpl implements PayslipService {
         }
         dto.setHouseAmount(payslip.getHouseAmount());
         dto.setTransportAmount(payslip.getTransportAmount());
-        dto.setEmployeeTaxAmount(payslip.getEmployeeTaxAmount());
+        dto.setEmployeeTaxAmount(payslip.getEmployeeCode());
         dto.setPensionAmount(payslip.getPensionAmount());
         dto.setMedicalInsuranceAmount(payslip.getMedicalInsuranceAmount());
         dto.setOtherTaxAmount(payslip.getOtherTaxAmount());
@@ -113,7 +113,7 @@ public class PayslipServiceImpl implements PayslipService {
         // payslip.setEmployee(employee);
         payslip.setHouseAmount(payslipDTO.getHouseAmount());
         payslip.setTransportAmount(payslipDTO.getTransportAmount());
-        payslip.setEmployeeTaxAmount(payslipDTO.getEmployeeTaxAmount());
+        payslip.setEmployeeTaxAmount(payslipDTO.getEmployeeCode());
         payslip.setPensionAmount(payslipDTO.getPensionAmount());
         payslip.setMedicalInsuranceAmount(payslipDTO.getMedicalInsuranceAmount());
         payslip.setOtherTaxAmount(payslipDTO.getOtherTaxAmount());
